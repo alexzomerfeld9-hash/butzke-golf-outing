@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8th Annual Butzke Memorial Golf Outing</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f4f6f0; color: #222; }
+
+  .hero {
+    background: linear-gradient(135deg, #1a4a2e 0%, #2d6e45 60%, #3a8a56 100%);
+    color: white;
+    text-align: center;
+    padding: 48px 24px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='2' fill='white' fill-opacity='0.04'/%3E%3C/svg%3E") repeat;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero h1 { font-size: 36px; font-weight: 800; line-height: 1.15; margin-bottom: 6px; position: relative; }
+  .hero h2 { font-size: 22px; font-weight: 400; opacity: 0.85; margin-bottom: 20px; position: relative; }
+  .hero-details {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;
+    font-size: 15px; opacity: 0.9; position: relative;
+  }
+  .hero-details span { display: flex; align-items: center; gap: 6px; }
+
+  .info-bar {
+    background: #fff;
+    border-bottom: 3px solid #2d6e45;
+    padding: 18px 24px;
+    text-align: center;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.7;
+  }
+  .info-bar strong { color: #1a4a2e; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  .section-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #dde5d8;
+    padding: 28px 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .section-title {
+    font-size: 18px; font-weight: 700; color: #1a4a2e;
+    border-bottom: 2px solid #e8f0e3;
+    padding-bottom: 12px; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: #e8f0e3; display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+  }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-grid.single { grid-template-columns: 1fr; }
+  @media(max-width: 580px) { .form-grid { grid-template-columns: 1fr; } }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 13px; font-weight: 600; color: #444; text-transform: uppercase; letter-spacing: 0.5px; }
+  .form-group input, .form-group select, .form-group textarea {
+    padding: 10px 13px; border: 1.5px solid #cdd8c5;
+    border-radius: 8px; font-size: 15px; background: #fafcf8;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: Arial, sans-serif;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none; border-color: #2d6e45; box-shadow: 0 0 0 3px rgba(45,110,69,0.12);
+    background: #fff;
+  }
+  .form-group textarea { resize: vertical; min-height: 70px; }
+
+  .golfer-row {
+    display: grid; grid-template-columns: 1fr 120px; gap: 12px;
+    align-items: end; margin-bottom: 12px;
+  }
+  @media(max-width: 480px) { .golfer-row { grid-template-columns: 1fr; } }
+
+  .package-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media(max-width: 520px) { .package-grid { grid-template-columns: 1fr; } }
+
+  .package-card {
+    border: 2px solid #dde5d8; border-radius: 10px; padding: 16px;
+    cursor: pointer; transition: all 0.2s; position: relative;
+    background: #fafcf8;
+  }
+  .package-card:hover { border-color: #2d6e45; background: #f2f8f0; }
+  .package-card.selected { border-color: #2d6e45; background: #eaf5e3; }
+  .package-card.selected::after {
+    content: '✓'; position: absolute; top: 10px; right: 12px;
+    color: #2d6e45; font-weight: 800; font-size: 16px;
+  }
+  .package-card input[type="radio"] { display: none; }
+  .package-name { font-weight: 700; font-size: 15px; color: #1a4a2e; margin-bottom: 2px; }
+  .package-price { font-size: 22px; font-weight: 800; color: #2d6e45; }
+  .package-desc { font-size: 12px; color: #666; margin-top: 4px; line-height: 1.5; }
+
+  .sponsor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media(max-width: 520px) { .sponsor-grid { grid-template-columns: 1fr; } }
+
+  .sponsor-card {
+    border: 2px solid #dde5d8; border-radius: 10px; padding: 14px;
+    cursor: pointer; transition: all 0.2s; background: #fafcf8;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sponsor-card:hover { border-color: #a87c2a; background: #fdf8ee; }
+  .sponsor-card.selected { border-color: #c49a2e; background: #fef8e3; }
+  .sponsor-card input[type="checkbox"] { accent-color: #c49a2e; width: 18px; height: 18px; cursor: pointer; }
+  .sponsor-info { flex: 1; }
+  .sponsor-name { font-weight: 700; font-size: 14px; color: #3a2a00; }
+  .sponsor-price { font-size: 18px; font-weight: 800; color: #a87c2a; }
+  .sponsor-note { font-size: 11px; color: #666; margin-top: 2px; }
+
+  .total-bar {
+    background: linear-gradient(135deg, #1a4a2e, #2d6e45);
+    color: white; border-radius: 12px; padding: 20px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px;
+  }
+  .total-label { font-size: 16px; opacity: 0.85; }
+  .total-amount { font-size: 32px; font-weight: 800; }
+
+  .payment-options {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;
+  }
+  @media(max-width: 520px) { .payment-options { grid-template-columns: 1fr; } }
+
+  .payment-card {
+    border: 1.5px solid #dde5d8; border-radius: 10px; padding: 16px;
+    background: #fafcf8; font-size: 14px; color: #333; line-height: 1.6;
+  }
+  .payment-card .pay-label { font-weight: 700; color: #1a4a2e; font-size: 15px; margin-bottom: 6px; }
+
+  .submit-btn {
+    width: 100%; padding: 16px; font-size: 17px; font-weight: 700;
+    background: linear-gradient(135deg, #1a4a2e, #2d6e45);
+    color: white; border: none; border-radius: 10px; cursor: pointer;
+    letter-spacing: 0.5px; transition: opacity 0.2s, transform 0.1s;
+  }
+  .submit-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+  .submit-btn:active { transform: translateY(0); }
+
+  .success-banner {
+    display: none; background: #eaf5e3; border: 2px solid #2d6e45;
+    border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 24px;
+  }
+  .success-banner h3 { color: #1a4a2e; font-size: 20px; margin-bottom: 8px; }
+  .success-banner p { color: #2d6e45; font-size: 15px; }
+
+  .includes-list { list-style: none; padding: 0; }
+  .includes-list li {
+    padding: 5px 0; font-size: 14px; color: #444;
+    border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 8px;
+  }
+  .includes-list li:last-child { border-bottom: none; }
+  .includes-list li::before { content: '⛳'; font-size: 13px; }
+
+  .req { color: #c0392b; }
+  .hint { font-size: 12px; color: #888; margin-top: 3px; }
+
+  .sponsor-signage-box {
+    margin-top: 14px; display: none;
+  }
+  .sponsor-signage-box.visible { display: block; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">🏌️ 8th Annual Golf Outing</div>
+  <h1>The Joshua Butzke<br>Memorial Foundation</h1>
+  <h2>Golf Outing in Support of the Foundation</h2>
+  <div class="hero-details">
+    <span>📅 Tuesday, June 30, 2026</span>
+    <span>⏰ 8:00 AM Start</span>
+    <span>📍 Middle Island Country Club</span>
+  </div>
+</div>
+
+<div class="info-bar">
+  <strong>Middle Island Country Club</strong> — 275 Middle Island Road, Middle Island, NY 11953<br>
+  All proceeds benefit The Joshua Butzke Memorial Foundation, an IRS approved 501(c)(3) charitable organization supporting Alzheimer's, Hunger initiatives, and educational opportunities in our local community.<br>
+  Questions? Contact Rich Butzke: <strong>soccer5butzke@aol.com</strong>
+</div>
+
+<div class="container">
+
+  <div id="success-banner" class="success-banner">
+    <h3>🎉 Registration Received!</h3>
+    <p>Thank you for supporting The Joshua Butzke Memorial Foundation. We'll be in touch with confirmation details. See you on the course!</p>
+  </div>
+
+  <form id="signup-form" novalidate>
+
+    <!-- Contact Info -->
+    <div class="section-card">
+      <div class="section-title">
+        <div class="section-icon">👤</div>
+        Your Contact Information
+      </div>
+      <div class="form-grid" style="margin-bottom:16px;">
+        <div class="form-group">
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" id="name" placeholder="First Last" required>
+        </div>
+        <div class="form-group">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="you@email.com" required>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Phone Number <span class="req">*</span></label>
+          <input type="tel" id="phone" placeholder="(555) 555-5555" required>
+        </div>
+        <div class="form-group">
+          <label>Mailing Address</label>
+          <input type="text" id="address" placeholder="Street, City, State, ZIP">
+        </div>
+      </div>
+    </div>
+
+    <!-- Registration Type -->
+    <div class="section-card">
+      <div class="section-title">
+        <div class="section-icon">🏌️</div>
+        Registration Selection <span class="req">*</span>
+      </div>
+      <div class="package-grid" id="package-grid">
+
+        <label class="package-card" onclick="selectPackage(this, 'foursome', 740)">
+          <input type="radio" name="package" value="foursome">
+          <div class="package-name">Foursome</div>
+          <div class="package-price">$740</div>
+          <div class="package-desc">Register a group of 4 golfers. Includes all package amenities for all players.</div>
+        </label>
+
+        <label class="package-card" onclick="selectPackage(this, 'single', 185)">
+          <input type="radio" name="package" value="single">
+          <div class="package-name">Single Golfer</div>
+          <div class="package-price">$185</div>
+          <div class="package-desc">Register as an individual golfer. We'll pair you with others on the day.</div>
+        </label>
+
+        <label class="package-card" onclick="selectPackage(this, 'unable', 0)" style="grid-column: span 2;">
+          <input type="radio" name="package" value="unable">
+          <div class="package-name">Unable to Attend — Donation Only</div>
+          <div class="package-price" style="font-size:16px; color:#888;">Custom amount</div>
+          <div class="package-desc">Can't make it but want to support the foundation? Make a donation below.</div>
+        </label>
+
+      </div>
+
+      <!-- Donation amount (shown only for "unable to attend") -->
+      <div id="donation-box" style="display:none; margin-top:16px;">
+        <div class="form-group">
+          <label>Donation Amount</label>
+          <input type="number" id="donation-amount" placeholder="$ Enter amount" min="1" oninput="updateTotal()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Golfer Names -->
+    <div class="section-card" id="golfer-names-section">
+      <div class="section-title">
+        <div class="section-icon">⛳</div>
+        Golfer Names &amp; Shirt Sizes
+      </div>
+      <div id="golfer-rows">
+        <!-- populated by JS -->
+      </div>
+    </div>
+
+    <!-- Sponsorship -->
+    <div class="section-card">
+      <div class="section-title">
+        <div class="section-icon">🏆</div>
+        Add a Sponsorship (Optional)
+      </div>
+      <div class="sponsor-grid">
+
+        <label class="sponsor-card" onclick="toggleSponsor(this, 'lunch', 1100)">
+          <input type="checkbox" name="sponsor" value="lunch" data-price="1100">
+          <div class="sponsor-info">
+            <div class="sponsor-name">Lunch</div>
+            <div class="sponsor-price">$1,100</div>
+          </div>
+        </label>
+
+        <label class="sponsor-card" onclick="toggleSponsor(this, 'breakfast', 550)">
+          <input type="checkbox" name="sponsor" value="breakfast" data-price="550">
+          <div class="sponsor-info">
+            <div class="sponsor-name">Breakfast</div>
+            <div class="sponsor-price">$550</div>
+          </div>
+        </label>
+
+        <label class="sponsor-card" onclick="toggleSponsor(this, 'beverage', 350)">
+          <input type="checkbox" name="sponsor" value="beverage" data-price="350">
+          <div class="sponsor-info">
+            <div class="sponsor-name">Beverage Cart</div>
+            <div class="sponsor-price">$350</div>
+          </div>
+        </label>
+
+        <label class="sponsor-card" onclick="toggleSponsor(this, 'driving', 300)">
+          <input type="checkbox" name="sponsor" value="driving" data-price="300">
+          <div class="sponsor-info">
+            <div class="sponsor-name">Driving Range</div>
+            <div class="sponsor-price">$300</div>
+          </div>
+        </label>
+
+        <label class="sponsor-card" onclick="toggleSponsor(this, 'teesign', 150)">
+          <input type="checkbox" name="sponsor" value="teesign" data-price="150">
+          <div class="sponsor-info">
+            <div class="sponsor-name">Tee-Sign</div>
+            <div class="sponsor-price">$150</div>
+            <div class="sponsor-note">12x18 sign with your name or company</div>
+          </div>
+        </label>
+
+        <label class="sponsor-card" onclick="toggleSponsor(this, 'longest', 150)">
+          <input type="checkbox" name="sponsor" value="longest" data-price="150">
+          <div class="sponsor-info">
+            <div class="sponsor-name">Longest Drive</div>
+            <div class="sponsor-price">$150</div>
+          </div>
+        </label>
+
+        <label class="sponsor-card" onclick="toggleSponsor(this, 'closest', 150)">
+          <input type="checkbox" name="sponsor" value="closest" data-price="150">
+          <div class="sponsor-info">
+            <div class="sponsor-name">Closest to the Pin</div>
+            <div class="sponsor-price">$150</div>
+          </div>
+        </label>
+
+      </div>
+
+      <!-- Signage name -->
+      <div class="sponsor-signage-box" id="signage-box">
+        <div class="form-group">
+          <label>Name / Company for Sponsorship Signage</label>
+          <input type="text" id="signage-name" placeholder="Enter name or company as you'd like it to appear">
+          <div class="hint">All commitments must be received by June 16th to be included on signage.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What's Included -->
+    <div class="section-card">
+      <div class="section-title">
+        <div class="section-icon">📋</div>
+        Package Includes
+      </div>
+      <ul class="includes-list">
+        <li>18 holes of golf with cart</li>
+        <li>Putting contest</li>
+        <li>8:00 AM start (Best Ball format)</li>
+        <li>Grab &amp; Go Breakfast</li>
+        <li>Beverage Cart</li>
+        <li>BBQ Lunch</li>
+        <li>Raffles (tickets available on day)</li>
+        <li>Prizes for Longest Drive, Closest to Pin, Best Score</li>
+        <li>Shirt included</li>
+      </ul>
+      <div style="margin-top:16px; padding-top:14px; border-top:1px solid #eee;">
+        <div style="font-weight:700; font-size:14px; color:#1a4a2e; margin-bottom:8px;">Schedule of the Day</div>
+        <div style="font-size:14px; color:#555; line-height:1.9;">
+          7:15 AM — Check in (or later)<br>
+          8:00 AM — Tee time start<br>
+          1:30 PM — Lunch and Raffle
+        </div>
+      </div>
+    </div>
+
+    <!-- Total + Payment -->
+    <div class="total-bar">
+      <div class="total-label">Total Amount Due</div>
+      <div class="total-amount" id="total-display">$0</div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title">
+        <div class="section-icon">💳</div>
+        Payment Options
+      </div>
+      <div class="payment-options">
+        <div class="payment-card">
+          <div class="pay-label">✉️ Mail a Check</div>
+          Make checks payable to:<br>
+          <strong>The Joshua Butzke Memorial Foundation</strong><br>
+          or <strong>Venmo: Joshua Butzke Memorial Foundation</strong><br><br>
+          Mail to:<br>
+          Butzke Residence<br>
+          519 Broadwater Road<br>
+          Arnold, MD 21012
+        </div>
+        <div class="payment-card">
+          <div class="pay-label">📱 Venmo</div>
+          <strong>@Joshua-Butzke</strong><br>
+          (or search: Joshua Butzke Memorial Foundation)<br><br>
+          <div style="font-size:13px; color:#888;">Please include your name and "Golf Outing 2026" in the memo.</div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:16px;">
+        <label>Additional Notes or Questions</label>
+        <textarea id="notes" placeholder="Dietary restrictions, accessibility needs, questions, etc."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Registration →</button>
+      <div style="text-align:center; font-size:12px; color:#888; margin-top:10px;">
+        Questions? Contact Rich Butzke at soccer5butzke@aol.com
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<script>
+  var currentPackage = null;
+  var registrationBase = 0;
+  var sponsorTotal = 0;
+
+  var shirtSizes = ['XS','S','M','L','XL','2XL','3XL'];
+
+  function selectPackage(el, type, price) {
+    document.querySelectorAll('.package-card').forEach(function(c){ c.classList.remove('selected'); });
+    el.classList.add('selected');
+    currentPackage = type;
+
+    var donationBox = document.getElementById('donation-box');
+    var golferSection = document.getElementById('golfer-names-section');
+
+    if (type === 'unable') {
+      donationBox.style.display = 'block';
+      golferSection.style.display = 'none';
+      registrationBase = 0;
+    } else {
+      donationBox.style.display = 'none';
+      golferSection.style.display = 'block';
+      registrationBase = price;
+      buildGolferRows(type === 'foursome' ? 4 : 1);
+    }
+    updateTotal();
+  }
+
+  function buildGolferRows(count) {
+    var container = document.getElementById('golfer-rows');
+    container.innerHTML = '';
+    for (var i = 1; i <= count; i++) {
+      var row = document.createElement('div');
+      row.className = 'golfer-row';
+      row.innerHTML = '<div class="form-group">' +
+        '<label>Golfer ' + i + ' Name' + (i===1?' <span class="req">*</span>':'') + '</label>' +
+        '<input type="text" id="golfer' + i + '" placeholder="Full Name"' + (i===1?' required':'') + '>' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label>Shirt Size</label>' +
+        '<select id="shirt' + i + '">' +
+        '<option value="">Select</option>' +
+        shirtSizes.map(function(s){ return '<option>'+s+'</option>'; }).join('') +
+        '</select></div>';
+      container.appendChild(row);
+    }
+  }
+
+  function toggleSponsor(el, type, price) {
+    setTimeout(function(){
+      el.classList.toggle('selected', el.querySelector('input').checked);
+      recalcSponsors();
+      updateSignageBox();
+    }, 10);
+  }
+
+  function recalcSponsors() {
+    sponsorTotal = 0;
+    document.querySelectorAll('.sponsor-card input[type="checkbox"]:checked').forEach(function(cb){
+      sponsorTotal += parseInt(cb.dataset.price);
+    });
+    updateTotal();
+  }
+
+  function updateSignageBox() {
+    var anyChecked = document.querySelectorAll('.sponsor-card input:checked').length > 0;
+    var box = document.getElementById('signage-box');
+    box.classList.toggle('visible', anyChecked);
+  }
+
+  function updateTotal() {
+    var donation = 0;
+    if (currentPackage === 'unable') {
+      var v = parseFloat(document.getElementById('donation-amount').value) || 0;
+      donation = v;
+    }
+    var total = registrationBase + sponsorTotal + donation;
+    document.getElementById('total-display').textContent = '$' + total.toLocaleString();
+  }
+
+  document.getElementById('signup-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('name').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var phone = document.getElementById('phone').value.trim();
+
+    if (!name || !email || !phone) {
+      alert('Please fill in your name, email, and phone number.');
+      return;
+    }
+    if (!currentPackage) {
+      alert('Please select a registration option.');
+      return;
+    }
+    if (currentPackage !== 'unable') {
+      var g1 = document.getElementById('golfer1');
+      if (g1 && !g1.value.trim()) {
+        alert('Please enter at least the first golfer\'s name.');
+        return;
+      }
+    }
+
+    this.style.display = 'none';
+    document.getElementById('success-banner').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  buildGolferRows(1);
+</script>
+</body>
+</html>
